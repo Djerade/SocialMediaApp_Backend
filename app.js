@@ -2,6 +2,8 @@ import express from 'express'
 
 //Import
 import { db } from "./Config/db.js";
+import { resolver } from "./GraphQl/Resolver/index.js";
+import { schema } from "./GraphQl/Schema/index.js";
 
 const PORT = process.env.PORT;
 
@@ -13,17 +15,17 @@ app.get('/', (req, res) => {
     res.send('serveur intagram')
 });
 
-app.listen(PORT, () => {
-    console.log('serveur runnig');
-})
+//Configuration de GraphQl
+
+app.use('./graphql', graphqlHTTP({
+    schema,
+    rootValue: resolver,
+    graphql: true
+}))
 
 //Connection base de donnée
 db.then(() => {
-    app.listen('5000', () => {
-    console.log('serveur runnig');
-})
+    app.listen(PORT)
 }).catch((err) => {
     console.error(err);
 });
-
-
