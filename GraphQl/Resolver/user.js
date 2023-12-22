@@ -10,9 +10,13 @@ import { User } from "../../Model/index.js"
             return Promise.reject(new GraphQLError(error.message))
         }
     },
-    createCompte: async () => {
+    createCompte: async (
+        {
+        firstName
+    }
+    ) => {
          try {
-            
+            return
          } catch (error) {
             return Promise.reject(new GraphQLError(error.message))
          }

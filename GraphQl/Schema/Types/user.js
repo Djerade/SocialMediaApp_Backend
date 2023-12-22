@@ -1,6 +1,6 @@
 const User = `
 type User {
-    firtName: String
+    firstName: String
 }
 `
 export default User

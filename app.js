@@ -1,5 +1,5 @@
 import express from 'express'
-
+import { createHandler } from 'graphql-http/lib/use/express';
 //Import
 import { db } from "./Config/db.js";
 import { resolver } from "./GraphQl/Resolver/index.js";
@@ -15,13 +15,11 @@ app.get('/', (req, res) => {
     res.send('serveur intagram')
 });
 
-//Configuration de GraphQl
-
-app.use('./graphql', graphqlHTTP({
+//Configureation graphql
+app.all('/graphql', createHandler({
     schema,
     rootValue: resolver,
-    graphql: true
-}))
+}));
 
 //Connection base de donnée
 db.then(() => {

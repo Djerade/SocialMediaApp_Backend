@@ -4,5 +4,4 @@ const newUser = `
 
 export const User = `
     createCompte(${newUser}): User,
-    users: [User]
 `

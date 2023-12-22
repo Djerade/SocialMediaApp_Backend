@@ -1,4 +1,3 @@
-export { User } from "./user.js"
+import { User } from "./user.js"
 
-const Queries = [ User ]; 
-export { Queries }
+export const Queries = [ User] ; 

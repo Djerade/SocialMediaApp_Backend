@@ -1,3 +1,3 @@
 export const User = `
-    user: [Task]!
+    users: [User]!,
 `
