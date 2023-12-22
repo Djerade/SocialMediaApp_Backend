@@ -1,7 +1,7 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 
-var userSchema = new mongoose(
+var userSchema = new mongoose.Schema(
     {
         firtName: {
             type: String

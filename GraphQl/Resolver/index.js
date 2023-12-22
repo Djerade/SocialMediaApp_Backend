@@ -1,7 +1,5 @@
-import { User } from "./user.js";
+import  User  from "./user.js";
 
-const Resolver = {
+export const resolver = {
     ...User
 }
-
-export default Resolver;

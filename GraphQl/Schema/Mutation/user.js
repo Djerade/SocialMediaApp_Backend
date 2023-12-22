@@ -2,6 +2,7 @@ const newUser = `
     firstName: String
 `
 
-export const Task = `
-    createCompte(${newUser}): User
+export const User = `
+    createCompte(${newUser}): User,
+    users: [User]
 `

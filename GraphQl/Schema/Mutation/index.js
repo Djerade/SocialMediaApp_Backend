@@ -1,5 +1,5 @@
-import { User } from "./user.js";
+import  {User}  from "./user.js";
 
-const Mutation = [User]
+const Mutations = [User]
 
-export { Mutation }
+export { Mutations }

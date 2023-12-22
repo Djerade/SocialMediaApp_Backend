@@ -1,4 +1,4 @@
-export { User} from './user.js'
+export { User } from "./user.js"
 
-const Queries = [User]
+const Queries = [ User ]; 
 export { Queries }

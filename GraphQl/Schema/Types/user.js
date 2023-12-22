@@ -3,3 +3,4 @@ type User {
     firtName: String
 }
 `
+export default User

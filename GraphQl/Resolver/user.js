@@ -2,12 +2,19 @@ import { GraphQLError } from "graphql";
 import { User } from "../../Model/index.js"
 
  export default {
-    user: async () => {
+    users: async () => {
         try {
             const user = await User.find();
             return user
         } catch (error) {
             return Promise.reject(new GraphQLError(error.message))
         }
-    }
+    },
+    createCompte: async () => {
+         try {
+            
+         } catch (error) {
+            return Promise.reject(new GraphQLError(error.message))
+         }
+     }
 }
