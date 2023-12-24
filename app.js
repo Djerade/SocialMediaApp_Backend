@@ -14,55 +14,19 @@ const typeDefs = gql`
     hello: String
   }
 `;
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-  },
-};
-// Initialisation
-// const app = express();
-
-// const server = new ApolloServer({
-//     typeDefs, resolvers
-// });
-
-// await ApolloServer.start();
-
-// server.applyMiddleware({ app });
-
 async function startApolloServer(schema, resolver){
     const server = new ApolloServer({schema, resolver})
     const app = express();
     await server.start();
     server.applyMiddleware({app, path: '/graphql'});
+    db.then(() => {
     app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}${server.graphqlPath}`);
-})
+    })
+    }).catch((err) => {
+        console.error(err);
+    });
 }
 
 startApolloServer(schema, resolver); 
  
-// Test route
-// app.get('/', (req, res) => {
-//     res.send('serveur intagram')
-// });
-
-
-
-//Configuration graphql
-// app.use('/graphql', createHandler({
-//     schema,
-//     rootValue: resolver,
-//     graphql: true
-// }));
-
-//Connection base de donnée
-// db.then(() => {
-//     app.listen(PORT, () => {
-//         console.log('serveur ruinning',PORT);
-//     })
-// }).catch((err) => {
-//     console.error(err);
-// });
