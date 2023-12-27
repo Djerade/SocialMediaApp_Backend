@@ -5,7 +5,6 @@ import { User } from "../../Model/index.js"
     users: async () => {
         try {
             const users = await User.find();
-            console.log(user);
             users.map((user) => {
                   return {
                 ...user._doc
@@ -22,13 +21,17 @@ import { User } from "../../Model/index.js"
             return Promise.reject(new GraphQLError(error.message) )
          }
      },
-    createCompte: async (
-        {
+    createAccounte: async ({
         firstName
     }
     ) => {
-         try {
-            return
+        try {
+            const user = new User({ firstName });
+            console.log('reslutat',user);
+            const userSaved = await user.save();
+            return {
+                ...userSaved._doc
+            }
          } catch (error) {
             return Promise.reject(new GraphQLError(error.message))
          }

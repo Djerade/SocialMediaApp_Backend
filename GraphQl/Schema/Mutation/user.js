@@ -3,5 +3,5 @@ const newUser = `
 `
 
 export const User = `
-    createCompte(${newUser}): User,
+    createAccount(${newUser}): User!
 `
