@@ -3,9 +3,10 @@ import mongoose from "mongoose";
 
 var userSchema = new mongoose.Schema(
     {
-        firstName: {
-            type: String
-        }
+        username: String,
+        password: String,
+        email: String,
+        createdAt: String
     }, {
         timeesTamps: true
     }

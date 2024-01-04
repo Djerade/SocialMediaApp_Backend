@@ -8,8 +8,20 @@ import { schema } from "./GraphQl/Schema/index.js";
 
 const PORT = 5000
 
-async function startApolloServer(schema, resolver){
-    const server = new ApolloServer({schema, resolver})
+const typeDefs = gql`
+    type Query {
+        SayHi: String!
+    }
+`
+
+const resolvers = {
+    Query: {
+        SayHi:() => 'Hello World'
+    }
+}
+
+async function startApolloServer(typeDefs, resolvers){
+    const server = new ApolloServer({typeDefs, resolvers})
     const app = express();
     await server.start();
     server.applyMiddleware({app, path: '/graphql'});
@@ -22,5 +34,6 @@ async function startApolloServer(schema, resolver){
     });
 }
 
-startApolloServer(schema, resolver); 
+startApolloServer(typeDefs, resolvers);
  
+

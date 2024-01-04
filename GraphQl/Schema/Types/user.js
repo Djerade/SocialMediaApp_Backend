@@ -1,6 +1,9 @@
 const User = `
 type User {
-    firstName: String
+    username: String,
+    password: String,
+    email: String,
+    createdAt: String
 }
 `
 export default User
