@@ -1,8 +1,8 @@
 const Post = `
     type Post {
-        id: ID!,
+        id: ID,
         body: String,
-        createdAt: String!
+        createdAt: String
         username: String
     }
 `

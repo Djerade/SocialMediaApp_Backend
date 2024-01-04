@@ -1,3 +1,4 @@
 export const Post = `
-    posts: [Post!]!
+    getAllPost: [Post],
+    post: [Post]
 `
