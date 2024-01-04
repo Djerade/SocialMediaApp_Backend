@@ -24,5 +24,22 @@ export default {
         return Promise.reject(new GraphQLError(error.message))
       }
   },
+  createPost: async ({
+    body,
+    username
+  }) => {
+    try {
+      return 
+    } catch (error) {
+      return Promise.reject(new GraphQLError(error.message))
+    }
+  }, 
+  updatePoste: async () => {
+    try {
+      return
+    } catch (error) {
+      return Promise.reject(new GraphQLError(error.message))
+    }
+  }
   
 }
