@@ -1,3 +1,3 @@
 export const Post = `
-    Posts: [Post]!
+    Posts: [Post!]!
 `
