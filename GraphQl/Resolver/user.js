@@ -1,6 +1,10 @@
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken"
 import { GraphQLError } from "graphql";
 import { User } from "../../Model/index.js"
 
+
+const SECRET_KEY = "perfef"
  export default {
     users: async () => {
         try {
@@ -21,19 +25,39 @@ import { User } from "../../Model/index.js"
             return Promise.reject(new GraphQLError(error.message) )
          }
      },
-    createAccounte: async ({
-        firstName
+    createAccount: async ({
+        username,
+        password,
+        confirmationPassword,
+        email
     }
     ) => {
         try {
-            const user = new User({ firstName });
-            console.log('reslutat',user);
+            password = await bcrypt.hash(password, 12);
+
+            const user = new User({
+                username,
+                password,
+                email,
+                createdAt: new Date().toISOString()
+            });
             const userSaved = await user.save();
+            const token = jwt.sign({
+                id: userSaved._id,
+                username: userSaved.username,
+                email: userSaved.email
+            }, SECRET_KEY, { expiresIn: '1h' });
+            console.log(token);
             return {
-                ...userSaved._doc
+                id: userSaved._id,
+                ...userSaved._doc,
+                token
             }
          } catch (error) {
             return Promise.reject(new GraphQLError(error.message))
          }
      }
 }
+
+
+

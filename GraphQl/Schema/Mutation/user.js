@@ -1,7 +1,12 @@
 const newUser = `
-    firstName: String
+    username: String
+    email: String
+    password: String
+    confirmationPassword: String
+
+
 `
 
 export const User = `
-    createAccount(${newUser}): User!
+     createAccount(${newUser}): User!
 `
