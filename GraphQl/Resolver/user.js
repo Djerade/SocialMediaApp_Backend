@@ -1,7 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken"
 import { GraphQLError } from "graphql";
+
+//Import
 import { User } from "../../Model/index.js"
+import { UserInputError } from "apollo-server-express";
+import { Validation } from "../../Auth/validation.js";
 
 
 const SECRET_KEY = "perfef"
@@ -33,21 +37,24 @@ const SECRET_KEY = "perfef"
     }
     ) => {
         try {
+            Validation(username, password, confirmationPassword, email);
             password = await bcrypt.hash(password, 12);
-
-            const user = new User({
+            const user = User.findOne({ username });
+            if (user) {
+                throw  new UserInputError('user exist')
+            }
+            const newuser = new User({
                 username,
                 password,
                 email,
                 createdAt: new Date().toISOString()
             });
-            const userSaved = await user.save();
+            const userSaved = await newuser.save();
             const token = jwt.sign({
                 id: userSaved._id,
                 username: userSaved.username,
                 email: userSaved.email
             }, SECRET_KEY, { expiresIn: '1h' });
-            console.log(token);
             return {
                 id: userSaved._id,
                 ...userSaved._doc,
