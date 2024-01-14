@@ -76,7 +76,21 @@ import { GenerateToken } from "../../Auth/GenerateToken.js";
          } catch (error) {
             return Promise.reject(new GraphQLError(error.message))
          }
-     }
+    },
+
+    users: async () => {
+        try {
+            const users = await User.find();
+            return users.map((user) => {
+                return {
+                    id: user._id,
+                    ...user._doc
+            }
+            })
+        } catch (error) {
+            return Promise.reject(new GraphQLError(error.message))
+        }
+    },
 }
 
 
