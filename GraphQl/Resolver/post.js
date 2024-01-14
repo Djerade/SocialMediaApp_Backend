@@ -2,7 +2,7 @@ import { GraphQLError } from "graphql";
 import { Post } from "../../Model/index.js"
 
 export default {
-    Posts : async () => {
+    getPosts : async () => {
         try {
           const postes = await Post.find();
           return postes.map((post) => {
@@ -12,12 +12,22 @@ export default {
         return Promise.reject(new GraphQLError(error.message))
       }
   },
+  
   createPost: async ({
     body,
-    username
+    username,
   }) => {
     try {
-      return 
+      const newPost = new Post({
+      body,
+      username,
+      createdAt: new Date().toISOString()
+      });
+      const postSaved = await newPost.save();
+      return {
+        id: postSaved._id,
+        ...postSaved._doc
+      }
     } catch (error) {
       return Promise.reject(new GraphQLError(error.message))
     }
