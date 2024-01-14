@@ -5,30 +5,41 @@ import { GraphQLError } from "graphql";
 //Import
 import { User } from "../../Model/index.js"
 import { UserInputError } from "apollo-server-express";
-import { Validation } from "../../Auth/validation.js";
+import { ValidateSignInInput } from "../../Auth/ValidateSignInInput.js";
+import { ValidateLoginInput } from "../../Auth/ValidateLoginInInput.js";
+import { GenerateToken } from "../../Auth/GenerateToken.js";
 
-
-const SECRET_KEY = "perfef"
  export default {
-    users: async () => {
-        try {
-            const users = await User.find();
-            users.map((user) => {
-                  return {
-                ...user._doc
-            }
-            })
+    login: async ({
+        username,
+        password
+    }) => {
+         try {
+             //Validation user data
+             const { valid, errors } = ValidateLoginInput(username, password);
+             if (!valid) {
+                throw new UserInputError('Error', errors);
+             }
+            const user = await User.findOne({username});
+            if (!user) {
+                throw new UserInputError("user don't exist");
+             }
+             const match = await bcrypt.compare(password, user.password);
+             if (!match) {
+                throw new UserInputError('password incorrect');
+             }
+             const token = GenerateToken(user)
+             return {
+                 id: user._id,
+                 ...user._doc,
+                 token
+             };
+            
         } catch (error) {
-            return Promise.reject(new GraphQLError(error.message))
+             return Promise.reject(new GraphQLError(error.message));
         }
     },
-    user: async () => {
-         try {
-            return 
-         } catch (error) {
-            return Promise.reject(new GraphQLError(error.message) )
-         }
-     },
+
     createAccount: async ({
         username,
         password,
@@ -37,11 +48,17 @@ const SECRET_KEY = "perfef"
     }
     ) => {
         try {
-            Validation(username, password, confirmationPassword, email);
+            // validation user data
+            const { valid, errors } = ValidateSignInInput(username, password, confirmationPassword, email);
+            if (!valid) {
+                throw new UserInputError('Error', errors);
+            }
+            //Hashage password
             password = await bcrypt.hash(password, 12);
-            const user = User.findOne({ username });
+
+            const user = await User.findOne({ username });
             if (user) {
-                throw  new UserInputError('user exist')
+                throw new UserInputError('user exist');
             }
             const newuser = new User({
                 username,
@@ -50,11 +67,7 @@ const SECRET_KEY = "perfef"
                 createdAt: new Date().toISOString()
             });
             const userSaved = await newuser.save();
-            const token = jwt.sign({
-                id: userSaved._id,
-                username: userSaved.username,
-                email: userSaved.email
-            }, SECRET_KEY, { expiresIn: '1h' });
+            const token = GenerateToken(userSaved)
             return {
                 id: userSaved._id,
                 ...userSaved._doc,

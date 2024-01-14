@@ -4,7 +4,12 @@ const newUser = `
     password: String
     confirmationPassword: String
 `
+const inputLogin = `
+    username: String
+    password: String
+`
 
 export const User = `
      createAccount(${newUser}): User!
+     login(${inputLogin}): User!
 `
