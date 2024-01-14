@@ -6,7 +6,10 @@ export default {
         try {
           const postes = await Post.find();
           return postes.map((post) => {
-              return { ...post._doc}
+            return {
+              id: post._id,
+              ...post._doc
+            }
             })
       } catch (error) {
         return Promise.reject(new GraphQLError(error.message))

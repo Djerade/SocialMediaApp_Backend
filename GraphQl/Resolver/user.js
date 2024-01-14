@@ -1,5 +1,4 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken"
 import { GraphQLError } from "graphql";
 
 //Import
