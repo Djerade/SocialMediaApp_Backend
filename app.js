@@ -12,7 +12,8 @@ async function startApolloServer(schema, resolver){
     const server = new ApolloServer({
         schema,
         rootValue: resolver,
-        graphiql: true
+        graphiql: true,
+        context: ({req}) =>({ req })
     });
     const app = express();
     await server.start();
