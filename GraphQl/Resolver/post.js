@@ -1,5 +1,6 @@
 import { GraphQLError } from "graphql";
 import { Post } from "../../Model/index.js"
+import ChechAuth from "../../Auth/Check_Auth.js";
 
 export default {
   getPosts: async () => {
@@ -32,10 +33,11 @@ export default {
     }
   },
   
-  createPost: async ({
+  createPost: async (_, {
     body,
     username,
-  }) => {
+  }, context) => {
+    ChechAuth(context);
     try {
       const newPost = new Post({
       body,

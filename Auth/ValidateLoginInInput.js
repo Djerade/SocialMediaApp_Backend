@@ -1,10 +1,10 @@
 export function ValidateLoginInput(username, password) {
     const errors = {};
     if (username.trim() === '') {
-        email.errors() = "username is empty";
+        email.errors() = "username  empty";
     }
     if (password.trim() === '') {
-        password.errors() = 'password is empty';
+        password.errors() = 'password  empty';
     }
     return {
         errors,
