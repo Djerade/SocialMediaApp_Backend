@@ -5,6 +5,7 @@ const post = `
 `
 
 const updatePost = `
+    _id: String!,
     body: String
 `
 export const Post = `

@@ -52,9 +52,23 @@ export default {
       return Promise.reject(new GraphQLError(error.message))
     }
   }, 
-  updatePost: async () => {
+  updatePost: async ({_id, body}) => {
     try {
-      return
+  
+      const post = await Post.findByIdAndUpdate({
+        _id: `${_id}`
+      }, {
+        $set: {
+          body
+        }
+      }, {
+        new: true
+      });
+
+      return {
+        id: _id,
+        ...post._doc
+      }
     } catch (error) {
       return Promise.reject(new GraphQLError(error.message))
     }
