@@ -20,7 +20,6 @@ export default {
   getPost: async (_, { _id }) => {
     try {
       const post = await Post.findById( _id );
-      console.log('--');
       if (!post) {
         throw new Error("post don't exist");
       }
@@ -53,11 +52,26 @@ export default {
       return Promise.reject(new GraphQLError(error.message))
     }
   }, 
-  updatePoste: async () => {
+  updatePost: async () => {
     try {
       return
     } catch (error) {
       return Promise.reject(new GraphQLError(error.message))
+    }
+  },
+  deletPost: async ({_id}) => {
+    try {
+      console.log('id', _id);
+      const post = await Post.findByIdAndDelete({ _id: `${_id}` }, { new: true});
+      if (!post) {
+        throw new Error("post don't exist");
+      }
+      return {
+        id: post._id,
+        ...post._doc
+      }
+    } catch (error) {
+      return Promise.reject(new GraphQLError(error.message));
     }
   }
   

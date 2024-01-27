@@ -9,5 +9,6 @@ const updatePost = `
 `
 export const Post = `
     createPost(${post}): Post,
-    updatePoste(${updatePost}): Post
+    updatePost(${updatePost}): Post,
+    deletPost(_id: ID): Post
 `
