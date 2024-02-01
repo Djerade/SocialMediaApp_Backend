@@ -2,7 +2,7 @@ const Comment = `
     type Comment {
         id: ID,
         body: String,
-        createdAt: String
+        createdAt: String!
         username: String
     }
 `

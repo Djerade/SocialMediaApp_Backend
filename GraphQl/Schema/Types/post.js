@@ -4,6 +4,7 @@ const Post = `
         body: String,
         createdAt: String
         username: String
+        comment : [Comment]
     }
 `
 

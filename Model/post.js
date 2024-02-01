@@ -22,9 +22,9 @@ var postSchema = new mongoose.Schema(
             ref: 'users'
         }
     }, {
-        timeesTamps: true
-    }
-)
+    timeesTamps: true
+}
+);
 const Post = mongoose.model('Post', postSchema)
 
 export default Post;
