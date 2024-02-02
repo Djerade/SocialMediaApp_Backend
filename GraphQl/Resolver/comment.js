@@ -4,8 +4,7 @@ import ChechAuth from "../../Auth/Check_Auth.js";
 
 
 export default {
-
-    createComment: async (_, {
+    createComment:  async (_, {
         postID,
         body,
         username,
@@ -15,16 +14,21 @@ export default {
     ) => {
         const user = ChechAuth(context);
         try {
-            if (body.trim() === '') {
-                throw new Error('comment must not be empty')
-            }
-            const post = Post.findById(postID);
-            console.log(post);
+            console.log(postID);
+            // if (body.trim() === '') {
+            //     throw new Error('comment must not be empty')
+            // }
+            const post = await Post.findById(postID);
+           
             return post;
         } catch (error) {
             return Promise.resolve(new GraphQLError(error.message));
         }
-    }
+    },
+
+    
+
+    
     
     
 }
