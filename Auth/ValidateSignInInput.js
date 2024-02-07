@@ -7,7 +7,7 @@ export function ValidateSignInInput(username, password, confirmationPassword, em
         password.errors() = 'password is empty';
     } else {
         if (password !== confirmationPassword) {
-            confirmationPassword.errors('passwoed must match');
+            confirmationPassword.errors('password must match');
         }
     }
     if (email.trim() === '') {

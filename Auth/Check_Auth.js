@@ -4,7 +4,7 @@ const SECRET_KEY = "perfect"
 
 const ChechAuth = (context) => {
     const authHeader = context?.req?.headers.authorization;
-    console.log(context?.req?.headers);
+    // console.log(context);
     if (authHeader) {
         const token = authHeader.splite('Bearer')[1];
         if (token) {

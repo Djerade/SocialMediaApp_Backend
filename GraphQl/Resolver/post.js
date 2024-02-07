@@ -36,7 +36,8 @@ export default {
     body,
     username,
   }, context) => {
-    ChechAuth(context);
+   
+    // ChechAuth(context);
     try {
       const newPost = new Post({
       body,

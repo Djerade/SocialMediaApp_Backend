@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-const SECRET_KEY = "perfef"
+const SECRET_KEY = "perfect"
 export function GenerateToken(user) {
   return jwt.sign({
                 id: user._id,
