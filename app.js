@@ -20,7 +20,6 @@ const creatContext = (request) => {
         console.log(token);
         // console.log('---',jwt.verify(token, SECRET_KEY));
         try {
-          
             const user = jwt.verify(token, SECRET_KEY);
             console.log("user",user);
             return user;
