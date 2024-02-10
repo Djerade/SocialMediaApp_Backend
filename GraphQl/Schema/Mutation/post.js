@@ -1,5 +1,5 @@
 const post = `
-    body: String,
+    body: String!,
     username: String
     createAt: String
 `

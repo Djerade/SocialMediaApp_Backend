@@ -1,7 +1,7 @@
 const Post = `
     type Post {
         id: ID,
-        body: String,
+        body: String!,
         createdAt: String
         username: String
         comment : [Comment]
