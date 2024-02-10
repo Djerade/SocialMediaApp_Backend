@@ -14,11 +14,8 @@ const creatContext = (request) => {
     if (!request.req.headers.authorization) {
         console.log('inconnu');
     } else {
-        // console.log(request.req.headers.authorization);
         const authHeader = request.req.headers.authorization;
-        const token = authHeader.split('Bearer')[1];
-        console.log(token);
-        // console.log('---',jwt.verify(token, SECRET_KEY));
+        const token = authHeader.split(' ')[1];
         try {
             const user = jwt.verify(token, SECRET_KEY);
             console.log("user",user);
@@ -28,7 +25,6 @@ const creatContext = (request) => {
         }
     }
 }
-
 async function startApolloServer(schema, resolver,) {
     const server = new ApolloServer({
         schema,
