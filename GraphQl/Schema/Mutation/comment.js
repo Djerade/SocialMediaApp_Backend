@@ -9,5 +9,5 @@ const updatePost = `
 `
 export const Comment = `
     createComment(${newComment}): Comment,
-    updateComment(${newComment}): Comment
+    updateComment(${updatePost}): Comment
 `
