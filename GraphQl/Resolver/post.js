@@ -54,7 +54,6 @@ export default {
   }, 
   updatePost: async ({_id, body}) => {
     try {
-  
       const post = await Post.findByIdAndUpdate({
         _id: `${_id}`
       }, {
@@ -64,7 +63,6 @@ export default {
       }, {
         new: true
       });
-
       return {
         id: _id,
         ...post._doc
