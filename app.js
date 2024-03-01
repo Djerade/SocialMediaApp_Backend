@@ -18,7 +18,7 @@ const creatContext = (request) => {
         const token = authHeader.split(' ')[1];
         try {
             const user = jwt.verify(token, SECRET_KEY);
-            console.log("user",user);
+            // console.log("user",user);
             return user;
         } catch (error) {
             console.error('Erreur',error);

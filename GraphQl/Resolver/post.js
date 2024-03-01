@@ -32,11 +32,12 @@ export default {
     }
   },
   
-  createPost: async (_, {
+  createPost: async ({
     body,
     username,
   }, context) => {
-    //  ChechAuth(context);
+    // ChechAuth(context);
+    // console.log(context);
     try {
       const newPost = new Post({
       body,
