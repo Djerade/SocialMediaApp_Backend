@@ -5,7 +5,6 @@ import { Schema } from "mongoose";
 var postSchema = new mongoose.Schema(
     {
         body: String,
-        username: String,
         createdAt: String,
         comments: [
             {
@@ -18,8 +17,9 @@ var postSchema = new mongoose.Schema(
             createdAt: String
         }],
         user: {
-            type: Schema.Types.ObjectId,
-            ref: 'users'
+            type: Schema.Types.Map,
+            ref: 'User',
+            required: true
         }
     }, {
     timeesTamps: true

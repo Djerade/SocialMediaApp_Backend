@@ -1,9 +1,6 @@
 const post = `
     body: String,
-    username: String
-    createAt: String
 `
-
 const updatePost = `
     _id: String!,
     body: String
