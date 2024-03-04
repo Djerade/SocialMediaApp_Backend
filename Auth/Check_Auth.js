@@ -3,23 +3,21 @@ import jwt from "jsonwebtoken"
 const SECRET_KEY = "perfect"
 
 const ChechAuth = (context) => {
-    console.log(context);
-        // const token = context.split(' ')[1];
-        // try {
-        //     const user = jwt.verify(token, SECRET_KEY);
-        //     // console.log("user",user);
-        //     return user;
-        // } catch (error) {
-        //     console.error('Erreur',error);
-    // }
-      if (!context.req.headers.authorization) {
+    const authHeader = context.req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+    if (!context.req.headers.authorization) {
         return
     } else {
-        const token = context.req.headers.authorization;
-        console.log("token", token);
-        return token;
+        try {
+            const user = jwt.verify(token, SECRET_KEY);
+            return user;
+        } catch (error) {
+            console.error('Erreur',error);
+        }
         // const authHeader = request.req.headers.authorization;
     }
 }
+
+
 
 export default ChechAuth;

@@ -10,27 +10,27 @@ import jwt from "jsonwebtoken"
 const PORT = 5000
 const SECRET_KEY = "perfect"
 
-const creatContext = (request) => {
-    if (!request.req.headers.authorization) {
-        console.log('inconnu');
-    } else {
-        const authHeader = request.req.headers.authorization;
-        const token = authHeader.split(' ')[1];
-        try {
-            const user = jwt.verify(token, SECRET_KEY);
-            // console.log("user",user);
-            return user;
-        } catch (error) {
-            console.error('Erreur',error);
-        }
-    }
-}
+// const creatContext = (request) => {
+//     if (!request.req.headers.authorization) {
+//         console.log('inconnu');
+//     } else {
+//         const authHeader = request.req.headers.authorization;
+//         const token = authHeader.split(' ')[1];
+//         try {
+//             const user = jwt.verify(token, SECRET_KEY);
+//             // console.log("user",user);
+//             return user;
+//         } catch (error) {
+//             console.error('Erreur',error);
+//         }
+//     }
+// }
 async function startApolloServer(schema, resolver,) {
     const server = new ApolloServer({
         schema,
         rootValue: resolver,
         graphiql: true,
-        context: creatContext
+        context: ({ req }) => ({ req })
     }); 
     const app = express();
     await server.start();

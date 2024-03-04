@@ -35,12 +35,11 @@ export default {
   createPost: async ({
     body,
   }, context) => {
-    // ChechAuth(context);
-    // console.log(context);
+    const user = ChechAuth(context);
     try {
       const newPost = new Post({
       body,
-      user: context,
+      user,
       createdAt: new Date().toISOString()
       });
       const postSaved = await newPost.save();
