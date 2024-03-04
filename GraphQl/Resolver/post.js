@@ -45,7 +45,8 @@ export default {
       const postSaved = await newPost.save();
       return {
         id: postSaved._id,
-        ...postSaved._doc
+        ...postSaved._doc,
+        ...postSaved.__v
       }
     } catch (error) {
       return Promise.reject(new GraphQLError(error.message))

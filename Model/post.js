@@ -17,9 +17,9 @@ var postSchema = new mongoose.Schema(
             createdAt: String
         }],
         user: {
-            type: Schema.Types.Map,
-            ref: 'User',
-            required: true
+            id: String,
+            username: String,
+            email: String
         }
     }, {
     timeesTamps: true
