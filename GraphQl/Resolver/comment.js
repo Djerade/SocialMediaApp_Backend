@@ -15,11 +15,7 @@ export default {
         const user = ChechAuth(context);
         try {
             console.log(postID);
-            // if (body.trim() === '') {
-            //     throw new Error('comment must not be empty')
-            // }
             const post = await Post.findById(postID);
-           
             return post;
         } catch (error) {
             return Promise.resolve(new GraphQLError(error.message));

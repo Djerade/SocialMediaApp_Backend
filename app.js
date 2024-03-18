@@ -1,5 +1,5 @@
 import express from 'express'
-import  {ApolloServer, AuthenticationError}  from 'apollo-server-express'
+import  {ApolloServer}  from 'apollo-server-express'
 //Import
 import { db } from "./Config/db.js";
 import { resolver } from "./GraphQl/Resolver/index.js";

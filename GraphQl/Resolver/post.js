@@ -3,21 +3,28 @@ import { Post } from "../../Model/index.js"
 import ChechAuth from "../../Auth/Check_Auth.js";
 
 export default {
-  getPosts: async () => {
-    try {
-      const postes = await Post.find();
-      return postes.map((post) => {
-        return {
-          id: post._id,
-          ...post._doc
+  getPosts: async (context) => {
+    const user = ChechAuth(context);
+    if (user) {
+        try {
+          const postes = await Post.find();
+          return postes.map((post) => {
+            return {
+              id: post._id,
+              ...post._doc
+            }
+          })
+        } catch (error) {
+          return Promise.reject(new GraphQLError(error.message))
         }
-      })
-    } catch (error) {
-      return Promise.reject(new GraphQLError(error.message))
+    } else {
+      
     }
   },
 
   getPost: async (_, { _id }) => {
+    const user = ChechAuth(context);
+    console.log(user);
     try {
       const post = await Post.findById( _id );
       if (!post) {
@@ -36,20 +43,24 @@ export default {
     body,
   }, context) => {
     const user = ChechAuth(context);
-    try {
-      const newPost = new Post({
-      body,
-      user,
-      createdAt: new Date().toISOString()
-      });
-      const postSaved = await newPost.save();
-      return {
-        id: postSaved._id,
-        ...postSaved._doc,
-        ...postSaved.__v
+    if (user) {
+      try {
+        const newPost = new Post({
+        body,
+        user,
+        createdAt: new Date().toISOString()
+        });
+        const postSaved = await newPost.save();
+        return {
+          id: postSaved._id,
+          ...postSaved._doc,
+          ...postSaved.__v
+        }
+      } catch (error) {
+        return Promise.reject(new GraphQLError(error.message))
       }
-    } catch (error) {
-      return Promise.reject(new GraphQLError(error.message))
+    } else {
+      console.log("Authentification requise");
     }
   }, 
   updatePost: async ({_id, body}) => {
@@ -71,9 +82,9 @@ export default {
       return Promise.reject(new GraphQLError(error.message))
     }
   },
-  deletPost: async ({_id}) => {
+  deletPost: async ({ _id }, context) => {
+    const user = ChechAuth(context);
     try {
-      console.log('id', _id);
       const post = await Post.findByIdAndDelete({ _id: `${_id}` }, { new: true});
       if (!post) {
         throw new Error("post don't exist");
