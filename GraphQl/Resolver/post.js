@@ -3,7 +3,8 @@ import { Post } from "../../Model/index.js"
 import ChechAuth from "../../Auth/Check_Auth.js";
 
 export default {
-  getPosts: async (context) => {
+  //Get all posts
+  getPosts: async (_, context) => {
     const user = ChechAuth(context);
     if (user) {
         try {
@@ -18,27 +19,30 @@ export default {
           return Promise.reject(new GraphQLError(error.message))
         }
     } else {
-      
+      console.log("Authentification requised");
     }
   },
-
-  getPost: async (_, { _id }) => {
+  //Get post by Id
+  getPost: async ({id},context) => {
     const user = ChechAuth(context);
-    console.log(user);
-    try {
-      const post = await Post.findById( _id );
-      if (!post) {
-        throw new Error("post don't exist");
-      }
-      return {
-        id: post._id,
-        ...post._doc
-      }
-    } catch (error) {
-      return Promise.reject(new GraphQLError(error.message))
+    if (user) {
+        try {
+        const post = await Post.findById(id);
+        if (!post) {
+          throw new Error("post don't exist");
+        }
+        return {
+          id: post._id,
+          ...post._doc
+        }
+        } catch (error) {
+          return Promise.reject(new GraphQLError(error.message))
+        }
+    } else {
+      console.log("Authentification requised");
     }
   },
-  
+  //Create a post
   createPost: async ({
     body,
   }, context) => {
@@ -63,38 +67,49 @@ export default {
       console.log("Authentification requise");
     }
   }, 
-  updatePost: async ({_id, body}) => {
-    try {
-      const post = await Post.findByIdAndUpdate({
-        _id: `${_id}`
-      }, {
-        $set: {
-          body
-        }
-      }, {
-        new: true
-      });
-      return {
-        id: _id,
-        ...post._doc
-      }
+  //Update a post
+  updatePost: async ({ _id, body }, context) => {
+    const user = ChechAuth(context);
+    if (user) {
+        try {
+          const post = await Post.findByIdAndUpdate({
+            _id: `${_id}`
+          }, {
+            $set: {
+              body
+            }
+          }, {
+            new: true
+          });
+          return {
+            id: _id,
+            ...post._doc
+          }
     } catch (error) {
       return Promise.reject(new GraphQLError(error.message))
     }
+    } else {
+      console.log("Authentification requise");
+    }
   },
+  //Delet a  post
   deletPost: async ({ _id }, context) => {
     const user = ChechAuth(context);
-    try {
-      const post = await Post.findByIdAndDelete({ _id: `${_id}` }, { new: true});
-      if (!post) {
-        throw new Error("post don't exist");
-      }
-      return {
-        id: post._id,
-        ...post._doc
-      }
-    } catch (error) {
-      return Promise.reject(new GraphQLError(error.message));
+    if (user) {
+        try {
+          const post = await Post.findByIdAndDelete({ _id: `${_id}` }, { new: true});
+          if (!post) {
+            throw new Error("post don't exist");
+          }
+          return {
+            id: post._id,
+            ...post._doc
+          }
+        } catch (error) {
+          return Promise.reject(new GraphQLError(error.message));
+        }
+    } else {
+      console.log('Authentication requised');
     }
   }
   
