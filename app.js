@@ -1,5 +1,6 @@
 import express from 'express'
 import  {ApolloServer}  from 'apollo-server-express'
+import cors from 'cors'
 //Import
 import { db } from "./Config/db.js";
 import { resolver } from "./GraphQl/Resolver/index.js";
@@ -15,6 +16,7 @@ async function startApolloServer(schema, resolver,) {
         context: ({ req }) => ({ req })
     }); 
     const app = express();
+    app.use(cors());
     await server.start();
     server.applyMiddleware({app, path: '/graphql'});
     db.then(() => {

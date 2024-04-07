@@ -2,7 +2,6 @@ import { GraphQLError } from "graphql"
 import { Post } from "../../Model/index.js";
 import ChechAuth from "../../Auth/Check_Auth.js";
 
-
 export default {
     createComment:  async (_, {
         postID,

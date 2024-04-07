@@ -6,7 +6,7 @@ const ChechAuth = (context) => {
     const authHeader = context.req.headers.authorization;
     const token = authHeader.split(' ')[1];
     if (!context.req.headers.authorization) {
-        return
+        console.log('auhorization requised');
     } else {
         try {
             const user = jwt.verify(token, SECRET_KEY);
@@ -14,7 +14,6 @@ const ChechAuth = (context) => {
         } catch (error) {
             console.error('Erreur',error);
         }
-        // const authHeader = request.req.headers.authorization;
     }
 }
 
