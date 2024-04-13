@@ -1,13 +1,13 @@
-export function ValidateSignInInput(username, password, confirmationPassword, email) {
+export function ValidateSignUpInput(username, password, confirmationPassword, email) {
     const errors = {}
-  if (username.trim() === '') {
+    if (username.trim() === '') {
       username.errors() = 'username is empty';
     }
     if (password.trim() === '') {
         password.errors() = 'password is empty';
     } else {
         if (password !== confirmationPassword) {
-            confirmationPassword.errors('password must match');
+            confirmationPassword.errors('password is different');
         }
     }
     if (email.trim() === '') {
