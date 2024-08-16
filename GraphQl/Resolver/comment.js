@@ -4,21 +4,34 @@ import ChechAuth from "../../Auth/Check_Auth.js";
 
 
 export default {
-    createComment:  async (_, {
+    createComment:  async ( {
         postID,
-        body,
-        username,
-        createAt
+        body,  
     },
-        context
-    ) => {
-        const user = ChechAuth(context);
-        try {
-            console.log(postID);
-            const post = await Post.findById(postID);
-            return post;
-        } catch (error) {
-            return Promise.resolve(new GraphQLError(error.message));
+    context
+    ) => {    
+        const { username } = ChechAuth(context);
+        if (username) {
+            try {
+                const post = await Post.findById(postID);
+                if (post) {
+                    post.comments.unshift({
+                        body,
+                        username,
+                        createAt: new Date().toISOString()
+                    });
+                    const postSaved = await  post.save();
+                    return {
+                        id: postSaved._id,
+                        ...postSaved._doc
+                    }
+                }
+
+            } catch (error) {
+                return Promise.resolve(new GraphQLError(error.message));
+            }
+        } else {
+            throw new Error("Authentication failed");
         }
     },
 

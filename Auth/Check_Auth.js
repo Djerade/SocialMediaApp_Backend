@@ -6,13 +6,13 @@ const ChechAuth = (context) => {
     const authHeader = context.req.headers.authorization;
     const token = authHeader.split(' ')[1];
     if (!context.req.headers.authorization) {
-        return
+        return 'erreur  ok token'
     } else {
         try {
             const user = jwt.verify(token, SECRET_KEY);
             return user;
         } catch (error) {
-            console.error('Erreur',error);
+            console.error('Erreur',error);  
         }
         // const authHeader = request.req.headers.authorization;
     }
