@@ -6,7 +6,19 @@ var userSchema = new mongoose.Schema(
         username: String,
         password: String,
         email: String,
-        createdAt: String
+        followers: [
+            {
+                id: String,
+                followeAt: String
+            }
+        ],
+        following: [
+            {
+                id: String,
+                followeAt: String
+            }
+        ],
+        createdAt: String,
     }, {
         timeesTamps: true
     }
