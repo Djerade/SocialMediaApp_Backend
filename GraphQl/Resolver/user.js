@@ -87,12 +87,13 @@ import  checkAuth from "../../Auth/Check_Auth.js";
                 const userFollower = await User.findById(id);
                 // console.log(idFollower);
                 if(userFollowing){
-                    userFollowing.followers.unshift({
-                        idFollower,
+                    userFollowing.following.unshift({
+                        id,
                         followeAt: new Date().toISOString()
                     });
-                    userFollower.following.unshift({
-                        id,
+                    console.log(idFollower);
+                    userFollower.followers.unshift({
+                        idFollower,
                         followeAt: new Date().toISOString()
                     });
                     const  userFollowingSaved =  await userFollowing.save();
