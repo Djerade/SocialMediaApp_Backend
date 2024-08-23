@@ -1,11 +1,9 @@
 import express from 'express'
-import  {ApolloServer}  from 'apollo-server-express'
+import  { ApolloServer }  from 'apollo-server-express'
 import mongoose from 'mongoose';
+import { graphqlUploadExpress } from 'graphql-upload-ts';
+import gridfsStream from 'gridfs-stream';
 
-import graphqlUploadExpress from 'gridfs-stream';
-import { GraphQLUpload } from 'graphql-upload';
-
-// import   graphqlUploadExpress  from 'graphql-upload';
 //Import
 import { db } from "./Config/db.js";
 import { resolver } from "./GraphQl/Resolver/index.js";
@@ -17,10 +15,9 @@ async function startApolloServer(schema, resolver,) {
   const conn = mongoose.connection;
   let gfs;
   conn.once('open', () => {
-  gfs = gridfsStream(conn.db, mongoose.mongo);
-  gfs.collection('uploads'); // Nom de la collection GridFS
-});
-
+    gfs = gridfsStream(conn.db, mongoose.mongo);
+    gfs.collection('uploads'); // Nom de la collection GridFS
+  });
     // Configurer le serveur Apollo
     const server = new ApolloServer({
         schema,
@@ -30,7 +27,7 @@ async function startApolloServer(schema, resolver,) {
     }); 
     const app = express();
     // Middleware pour gérer les téléchargements de fichiers            
-    app.use(GraphQLUpload());
+    app.use(graphqlUploadExpress ());
     await server.start();
     server.applyMiddleware({app, path: '/graphql'});
     // Endpoint pour récupérer les fichiers
@@ -45,7 +42,7 @@ async function startApolloServer(schema, resolver,) {
     })
     db.then(() => {
     app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}${server.graphqlPath}`);
+    console.log(`🚀 Server is listening on port ${PORT}${server.graphqlPath}`);
     })
     }).catch((err) => {
         console.error(err);
