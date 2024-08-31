@@ -6,5 +6,4 @@ const Comment = `
         username: String
     }
 `
-
 export default Comment

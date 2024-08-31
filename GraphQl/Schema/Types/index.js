@@ -5,5 +5,5 @@ import Like from "./like.js"
 import Image from "./Image.js"
 import Upload from "./scalars.js"
 
-const Types = [User, Post, Comment, Like, Upload, Image ]
+const Types = [ User, Post, Comment, Like, Upload, Image ]
 export { Types }

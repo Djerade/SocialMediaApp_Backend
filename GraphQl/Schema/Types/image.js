@@ -3,6 +3,8 @@ const Image = `
         id: ID!
         filename: String!
         contentType: String!
+        length: Int!
+        uploadDate: String!
         url: String!
     }
 `

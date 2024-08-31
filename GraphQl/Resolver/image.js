@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import { db } from "../../Config/db.js";
-import { createReadStream } from 'fs';
+import { createReadStream, write } from 'fs';
 import { rejects } from "assert";
 import { GraphQLUpload } from 'graphql-upload-ts';
 import mongoose from 'mongoose';
@@ -15,21 +15,30 @@ conn.once('open', () => {
   gfs.collection('uploads');
 });
 
+const storeFile = async (upload) => {
+    const { filename, createReadStream, mimetype } = await upload.then(result => result);
 
+    const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'files' });
+    
+    const uploadStream = bucket.openUploadStream(filename, {
+      contentType: mimetype
+    });
+    return new Promise((resolve, reject) => {
+      createReadStream()
+        .pipe(uploadStream)
+        .on('error', reject)
+        .on('finish', () => {
+            resolve(uploadStream.id)
+        })
+    })
+  }
 
 export  default {
     Upload: GraphQLUpload,
     uploadImage: async (_, { file }) =>{
-   
-        
-        const { createReadStream, filename, mimetype } = await file;
-        console.log("filename",createReadStream);
-        
-        return new Promise((resolve, rejects) =>{
-            const writeStream = gfs.createWriteStream({
-                filename,
-                contentType: mimetype,
-            });
-        });
+        const fileId = await storeFile(file).then(result => result);
+        console.log(fileId);
+        return true;
+    
     }
 }

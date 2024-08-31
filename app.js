@@ -12,12 +12,12 @@ import { schema } from "./GraphQl/Schema/index.js";
 
 dotenv.config()
 async function startApolloServer(schema, resolver,) {
-  const conn = mongoose.connection;
-  let gfs;
-  conn.once('open', () => {
-    gfs = gridfsStream(conn.db, mongoose.mongo);
-    gfs.collection('uploads'); // Nom de la collection GridFS
-  });
+    const conn = mongoose.connection;
+    let gfs;
+    conn.once('open', () => {
+      gfs = gridfsStream(conn.db, mongoose.mongo);
+      gfs.collection('uploads'); // Nom de la collection GridFS
+    });
     // Configurer le serveur Apollo
     const server = new ApolloServer({
         schema,
