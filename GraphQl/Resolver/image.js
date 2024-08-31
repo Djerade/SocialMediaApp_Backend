@@ -16,10 +16,15 @@ conn.once('open', () => {
 });
 
 
+
 export  default {
     Upload: GraphQLUpload,
     uploadImage: async (_, { file }) =>{
+   
+        
         const { createReadStream, filename, mimetype } = await file;
+        console.log("filename",createReadStream);
+        
         return new Promise((resolve, rejects) =>{
             const writeStream = gfs.createWriteStream({
                 filename,

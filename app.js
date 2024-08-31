@@ -3,14 +3,14 @@ import  { ApolloServer }  from 'apollo-server-express'
 import mongoose from 'mongoose';
 import { graphqlUploadExpress } from 'graphql-upload-ts';
 import gridfsStream from 'gridfs-stream';
+import * as  dotenv from 'dotenv';
 
 //Import
 import { db } from "./Config/db.js";
 import { resolver } from "./GraphQl/Resolver/index.js";
 import { schema } from "./GraphQl/Schema/index.js";
 
-const PORT = 5000
-
+dotenv.config()
 async function startApolloServer(schema, resolver,) {
   const conn = mongoose.connection;
   let gfs;
@@ -41,8 +41,8 @@ async function startApolloServer(schema, resolver,) {
         })
     })
     db.then(() => {
-    app.listen(PORT, () => {
-    console.log(`🚀 Server is listening on port ${PORT}${server.graphqlPath}`);
+    app.listen(process.env.PORT, () => {
+    console.log(`🚀 Server is listening on port ${process.env.PORT}${server.graphqlPath}`);
     })
     }).catch((err) => {
         console.error(err);
