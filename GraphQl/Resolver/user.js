@@ -7,6 +7,7 @@ import { UserInputError } from "apollo-server-express";
 import { ValidateSignInInput } from "../../Auth/ValidateSignInInput.js";
 import { ValidateLoginInput } from "../../Auth/ValidateLoginInInput.js";
 import { GenerateToken } from "../../Auth/GenerateToken.js";
+import  checkAuth from "../../Auth/Check_Auth.js";
 
  export default {
     login: async ({
@@ -66,7 +67,7 @@ import { GenerateToken } from "../../Auth/GenerateToken.js";
                 createdAt: new Date().toISOString()
             });
             const userSaved = await newuser.save();
-            const token = GenerateToken(userSaved)
+            const token = GenerateToken(userSaved);
             return {
                 id: userSaved._id,
                 ...userSaved._doc,
@@ -75,6 +76,42 @@ import { GenerateToken } from "../../Auth/GenerateToken.js";
          } catch (error) {
             return Promise.reject(new GraphQLError(error.message))
          }
+    },
+
+    follow : async ({id}, context) => {
+        try{
+            const user =  checkAuth(context);
+            const idFollower = user.id;
+            if(id){
+                const userFollowing = await User.findById(idFollower);//idUser
+                const userFollower = await User.findById(id);
+                // console.log(idFollower);
+                if(userFollowing){
+                    userFollowing.following.unshift({
+                        id,
+                        followeAt: new Date().toISOString()
+                    });
+                    console.log(idFollower);
+                    userFollower.followers.unshift({
+                        idFollower,
+                        followeAt: new Date().toISOString()
+                    });
+                    const  userFollowingSaved =  await userFollowing.save();
+                    const  userSaved = await userFollower.save();
+                    return {
+                        id: userSaved._id,
+                        ...userSaved._doc
+                    }
+                    
+                }else{
+                    console.log("Follower not find");
+                }
+            }else{
+                console.log("Authentification requised");
+            }
+        }catch(error) {
+            return Promise.reject(new  GraphQLError(error.message))
+        }
     },
 
     users: async () => {

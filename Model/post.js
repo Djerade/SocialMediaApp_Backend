@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { Schema } from "mongoose";
-
 
 var postSchema = new mongoose.Schema(
     {

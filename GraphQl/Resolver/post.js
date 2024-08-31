@@ -92,7 +92,7 @@ export default {
       console.log("Authentification requise");
     }
   },
-  //Delet a  post
+  //Delete a  post
   deletPost: async ({ _id }, context) => {
     const user = ChechAuth(context);
     if (user) {
