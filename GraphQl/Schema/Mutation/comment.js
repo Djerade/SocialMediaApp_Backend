@@ -8,6 +8,7 @@ const newComment = `
 const updatePost = `
     body: String
 `
+
 export const Comment = `
     createComment(${newComment}): Post!,
     updateComment(${updatePost}): Post!

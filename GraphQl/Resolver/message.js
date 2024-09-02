@@ -15,20 +15,29 @@ export default {
         }
     },
 
-    createMessage: async ({ idreceiver, content}, context) => {
-
-        const sender = ChechAuth(context);
+    createMessage: async ({ idreceiver, content}, context) => { 
+        const  sender  = ChechAuth(context);
+        let id = sender.id;
         const receiver = await User.findById(idreceiver);
-        
-        if (sender) {
+        if (sender)     {
             try {
                 const message = new Message({
                     content,
-                    sender,
-                    receiver,
-                    createdAt: new Date().toISOString()
+                    sender: id,
+                    receiver: idreceiver,
+                    
                 })
                 const messageSaved = await message.save();
+
+                // update sender
+                await User.findByIdAndUpdate(id, { $push: { sentMessages: messageSaved._id }});
+
+                // update receiver
+                await User.updateMany(
+                    { _id: { $in: idreceiver}}, 
+                    { $push: {receivedMessages: messageSaved._id }}
+                );
+
                 return {
                     id: messageSaved._id,
                     ...messageSaved._doc

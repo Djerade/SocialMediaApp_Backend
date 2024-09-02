@@ -6,7 +6,10 @@ var userSchema = new mongoose.Schema(
         username: String,
         password: String,
         email: String,
+        sentMessages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
+        receivedMessages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
         createdAt: String
+
     }, {
         timeesTamps: true
     }

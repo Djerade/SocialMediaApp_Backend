@@ -1,8 +1,8 @@
 const message = `
-    content: String
-    idreceiver: String
+    content: String!
+    idreceiver: ID!
 ` 
 
 export const Message = `
-    createMessage(${message}): Message
+    createMessage(${message}): Message!
 `

@@ -2,6 +2,7 @@ const newUser = `
     username: String
     email: String
     password: String
+    message: String
     confirmationPassword: String
 `
 const inputLogin = `
