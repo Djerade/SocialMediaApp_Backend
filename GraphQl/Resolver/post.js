@@ -19,7 +19,7 @@ export default {
           return Promise.reject(new GraphQLError(error.message))
         }
     } else {
-      console.log("Authentification requised");
+      console.error("Authentification requised");
     }
   },
   //Get post by Id
@@ -39,7 +39,7 @@ export default {
           return Promise.reject(new GraphQLError(error.message))
         }
     } else {
-      console.log("Authentification requised");
+      console.error("Authentification requised");
     }
   },
   //Create a post
@@ -64,7 +64,7 @@ export default {
         return Promise.reject(new GraphQLError(error.message))
       }
     } else {
-      console.log("Authentification requise");
+      console.error("Authentification requised");
     }
   }, 
   //Update a post
@@ -89,7 +89,7 @@ export default {
       return Promise.reject(new GraphQLError(error.message))
     }
     } else {
-      console.log("Authentification requise");
+      console.error("Authentification requised");
     }
   },
   //Delet a  post
@@ -109,7 +109,7 @@ export default {
           return Promise.reject(new GraphQLError(error.message));
         }
     } else {
-      console.log('Authentication requised');
+      console.error("Authentification requised");
     }
   }
   
