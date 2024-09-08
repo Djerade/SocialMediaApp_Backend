@@ -9,5 +9,5 @@ export const resolver = {
     ...Post,
     ...comment,
     ...like,
-    ...message
+    ...message,
 }

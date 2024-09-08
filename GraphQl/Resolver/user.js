@@ -84,6 +84,7 @@ import { GenerateToken } from "../../Auth/GenerateToken.js";
                 return {
                     id: user._id,
                     ...user._doc
+
             }
             })
         } catch (error) {

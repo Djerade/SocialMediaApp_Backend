@@ -4,6 +4,9 @@ import { buildSchema } from "graphql";
 import   { Types }   from './Types/index.js';
 import  { Mutations }  from "./Mutation/index.js";
 import  { Queries }  from "./Queries/index.js";
+import { Subcriptions } from "./Subcriptions/index.js";
+
+
 
 export const schema = buildSchema(`
 
@@ -17,8 +20,13 @@ type Mutation {
   ${Mutations.join(`\n`)}
 }
 
+type Subcription {
+  ${Subcriptions.join(`\n`)}
+}
+
 schema {
  query : Query
  mutation: Mutation
+ subscription: Subcription
 }
 `)
