@@ -50,7 +50,7 @@ import { GenerateToken } from "../../Auth/GenerateToken.js";
             // validation user data
             const { valid, errors } = ValidateSignInInput(username, password, confirmationPassword, email);
             if (!valid) {
-                throw new UserInputError('Error', errors);
+                throw new  UserInputError('Error', errors);
             }
             //Hashage password
             password = await bcrypt.hash(password, 12);
@@ -84,7 +84,6 @@ import { GenerateToken } from "../../Auth/GenerateToken.js";
                 return {
                     id: user._id,
                     ...user._doc
-
             }
             })
         } catch (error) {

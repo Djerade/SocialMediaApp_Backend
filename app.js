@@ -17,7 +17,7 @@ async function startApolloServer(schema, resolver,) {
         graphiql: true,
         context: async ({ req }) => {
             return { req, pubsub }
-        }
+        }  
     
     }); 
     const app = express();
