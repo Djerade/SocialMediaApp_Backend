@@ -5,6 +5,7 @@ const Post = `
         createdAt: String,
         user: User!,
         comment : [Comment]
+        likes: [Like]
     }
 `
 

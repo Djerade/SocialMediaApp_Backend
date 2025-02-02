@@ -2,7 +2,8 @@ ARG NODE_VERSION=20.10.0
 
 FROM node:${NODE_VERSION}-alpine
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+# Use production node environment by  default.
+ENV NODE_ENV production
 
 WORKDIR /home/node/app
 
